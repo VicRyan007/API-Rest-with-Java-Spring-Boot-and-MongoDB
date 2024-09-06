@@ -1,3 +1,4 @@
+package com.ifpe.project;
 
 
 import org.springframework.boot.SpringApplication;
