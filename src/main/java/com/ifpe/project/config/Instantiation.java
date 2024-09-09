@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.ifpe.project.domain.Post;
 import com.ifpe.project.domain.User;
 import com.ifpe.project.dto.AuthorDTO;
+import com.ifpe.project.dto.CommentDTO;
 import com.ifpe.project.repository.PostRepository;
 import com.ifpe.project.repository.UserRepository;
 
@@ -56,6 +57,29 @@ public class Instantiation implements CommandLineRunner {
 		alex.getPosts().addAll(Arrays.asList(post6,post7,post8));
 		
 		userRepository.saveAll(Arrays.asList(maria,alex,bob));
+		
+
+		CommentDTO c1 = new CommentDTO("Boa viagem mano!", sdf.parse("22/03/2018"), new AuthorDTO(alex));
+		CommentDTO c2 = new CommentDTO("Aproveite a viagem!", sdf.parse("23/03/2018"), new AuthorDTO(bob));
+		CommentDTO c3 = new CommentDTO("Parabéns pelo novo projeto!", sdf.parse("11/05/2022"), new AuthorDTO(bob));
+		CommentDTO c4 = new CommentDTO("Feliz aniversário!", sdf.parse("16/07/2023"), new AuthorDTO(alex));
+		CommentDTO c5 = new CommentDTO("Que evento incrível!", sdf.parse("04/11/2024"), new AuthorDTO(maria));
+		CommentDTO c6 = new CommentDTO("Ótima atualização, parabéns!", sdf.parse("05/09/2020"), new AuthorDTO(maria));
+		CommentDTO c7 = new CommentDTO("Parabéns pelo desafio concluído!", sdf.parse("01/07/2019"), new AuthorDTO(bob));
+		CommentDTO c8 = new CommentDTO("Desejo um ótimo ano novo!", sdf.parse("13/01/2023"), new AuthorDTO(bob));
+		
+		post1.getComments().addAll(Arrays.asList(c1, c2));
+		post2.getComments().addAll(Arrays.asList(c3));
+		post3.getComments().addAll(Arrays.asList(c4));
+		post4.getComments().addAll(Arrays.asList(c5));
+		post5.getComments().addAll(Arrays.asList(c7));
+		post6.getComments().addAll(Arrays.asList(c6));
+		post7.getComments().addAll(Arrays.asList(c7));
+		post8.getComments().addAll(Arrays.asList(c8));		
+		
+		postRepository.saveAll(Arrays.asList(post1, post2, post3, post4, post5, post6, post7, post8));
+
+		
 
 	}
 
