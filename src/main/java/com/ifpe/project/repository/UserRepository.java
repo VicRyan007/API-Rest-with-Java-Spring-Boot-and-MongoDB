@@ -8,4 +8,6 @@ import com.ifpe.project.domain.User;
 @Repository
 public interface UserRepository extends MongoRepository<User,String>{
 
+	
+
 }
