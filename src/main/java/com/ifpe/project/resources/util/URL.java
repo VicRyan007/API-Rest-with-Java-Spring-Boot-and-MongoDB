@@ -1,4 +1,4 @@
-package com.ifpe.project.util;
+package com.ifpe.project.resources.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

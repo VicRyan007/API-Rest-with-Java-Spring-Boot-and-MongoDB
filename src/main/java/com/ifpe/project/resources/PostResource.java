@@ -1,4 +1,5 @@
-	package com.ifpe.project.resources;
+	
+package com.ifpe.project.resources;
 	
 import java.util.List;
 
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifpe.project.domain.Post;
+import com.ifpe.project.resources.util.URL;
 import com.ifpe.project.services.PostService;
-import com.ifpe.project.util.URL;
 	
 	@RestController
 	@RequestMapping(value = "/posts")
