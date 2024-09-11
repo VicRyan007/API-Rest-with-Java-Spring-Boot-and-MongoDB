@@ -56,7 +56,7 @@ mvn spring-boot:run
 ### 3. Acesse a aplicação
 
 - A API estará disponível em: `http://localhost:8080/`
-- A documentação OpenAPI (Swagger UI) estará acessível em: `http://localhost:8080/swagger-ui.html`
+- A documentação OpenAPI (Swagger UI) estará acessível em: `http://localhost:8080/api/swagger-ui.html`
 
 ## Como Executar os Testes
 
@@ -82,7 +82,4 @@ mvn test
 ## Contribuições
 
 Sinta-se à vontade para fazer um fork deste repositório, abrir issues e enviar pull requests.
-
----
-```
 
