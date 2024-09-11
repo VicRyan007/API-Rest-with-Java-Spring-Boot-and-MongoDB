@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class PostService {
 	
 	@Autowired
 	private PostRepository repo;
+	
+    private static final Logger logger = LoggerFactory.getLogger(PostService.class);
+
 
 	public List<Post> findAll(){
 		return repo.findAll();
@@ -35,9 +40,14 @@ public class PostService {
         return post.orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado. ID: " + id));
     }
 	
-	public List<Post> findByTitle (String text){
-		return repo.searchTitle(text);
-	}
+	 public List<Post> findByTitle(String text) {
+	        try {
+	            return repo.findByTitleContainingIgnoreCase(text);
+	        } catch (Exception e) {
+	            logger.error("Error occurred while finding posts by title", e);
+	            throw e; // Re-throw or handle exception as needed
+	        }
+	    }
 	
 	public List<Post> fullSearch(String text, Date minDate, Date maxDate) {
 		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);

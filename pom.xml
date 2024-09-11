@@ -45,10 +45,35 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>org.springframework.plugin</groupId>
+		    <artifactId>spring-plugin-core</artifactId>
+		    <version>2.0.0.RELEASE</version> <!-- Ou a versão mais recente -->
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+		<dependency>
+		    <groupId>io.rest-assured</groupId>
+		    <artifactId>rest-assured</artifactId>
+		    <version>5.5.0</version>
+		    <scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.13.2</version>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.springdoc</groupId>
+		    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+		    <version>2.2.0</version>
+		</dependency>
 
 
-		
 	</dependencies>
+	
 
 	<build>
 		<plugins>
