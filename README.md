@@ -1,4 +1,4 @@
-```markdown
+
 # API-Rest-with-Java-Spring-Boot-and-MongoDB
 
 Este é um projeto de exemplo que demonstra como criar uma API RESTful usando Java, Spring Boot, e MongoDB, com documentação OpenAPI gerada automaticamente pelo SpringDoc.
