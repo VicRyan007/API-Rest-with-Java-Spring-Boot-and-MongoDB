@@ -30,6 +30,17 @@ public class PostResource {
     private PostService service;
 
     private static final Logger logger = LoggerFactory.getLogger(PostResource.class);
+    
+    @Operation(summary = "Retrieve all posts", description =  "Fetch all posts from the database")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description =  "Posts retrieved successfully"),
+        @ApiResponse(responseCode = "404", description =  "No posts found")
+    })
+    @RequestMapping(value = "/allposts", method=RequestMethod.GET)
+    public ResponseEntity<List<Post>> findAll() {
+        List<Post> posts = service.findAll();
+        return ResponseEntity.ok().body(posts);
+    }
 
     @Operation(summary = "Get post by ID", description = "Retrieve a single post by its ID")
     @ApiResponses(value = {

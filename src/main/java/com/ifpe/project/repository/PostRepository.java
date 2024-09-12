@@ -12,6 +12,8 @@ import com.ifpe.project.domain.Post;
 @Repository
 public interface PostRepository extends MongoRepository<Post,String>{
 
+	
+	
 	@Query("{'title': { $regex: ?0, $options: '<options> } }'")
 	List<Post> searchTitle(String text);
 	
