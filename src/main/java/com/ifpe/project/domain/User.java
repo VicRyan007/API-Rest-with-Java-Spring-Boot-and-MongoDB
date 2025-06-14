@@ -9,6 +9,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Representa um usuário no sistema.
+ * Esta classe é mapeada para a coleção "users" no MongoDB.
+ */
 @Document(collection = "users")
 public class User implements Serializable {
 
@@ -16,17 +20,26 @@ public class User implements Serializable {
 	
 	@Id
 	private String id;
-	private String name,email;
+	private String name;
+	private String email;
 	
 	@DBRef(lazy = true)
 	private List<Post> posts = new ArrayList<>();
 	
+	/**
+	 * Construtor padrão necessário para o MongoDB.
+	 */
 	public User() {
-		
 	}
 
+	/**
+	 * Construtor com parâmetros.
+	 * 
+	 * @param id Identificador único do usuário
+	 * @param name Nome do usuário
+	 * @param email Email do usuário
+	 */
 	public User(String id, String name, String email) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -56,7 +69,6 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-
 	public List<Post> getPosts() {
 		return posts;
 	}
@@ -72,13 +84,22 @@ public class User implements Serializable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", email='" + email + '\'' +
+				'}';
 	}
 }

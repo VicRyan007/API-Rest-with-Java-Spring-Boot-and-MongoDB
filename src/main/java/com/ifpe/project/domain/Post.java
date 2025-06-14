@@ -12,26 +12,40 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.ifpe.project.dto.AuthorDTO;
 import com.ifpe.project.dto.CommentDTO;
 
+/**
+ * Representa um post no sistema.
+ * Esta classe é mapeada para a coleção "posts" no MongoDB.
+ */
 @Document(collection = "posts")
-public class Post implements Serializable{
+public class Post implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private String id;
 	private Date date;
-	private String title,body;
+	private String title;
+	private String body;
 	private AuthorDTO author;
 	
 	private List<CommentDTO> comments = new ArrayList<>(); 
 	
+	/**
+	 * Construtor padrão necessário para o MongoDB.
+	 */
 	public Post() {
-		
 	}
 
-	public Post(String id, Date date, String title, String body,AuthorDTO author) {
-		super();
+	/**
+	 * Construtor com parâmetros.
+	 * 
+	 * @param id Identificador único do post
+	 * @param date Data de criação do post
+	 * @param title Título do post
+	 * @param body Conteúdo do post
+	 * @param author Autor do post
+	 */
+	public Post(String id, Date date, String title, String body, AuthorDTO author) {
 		this.id = id;
 		this.date = date;
 		this.title = title;
@@ -71,7 +85,7 @@ public class Post implements Serializable{
 		this.body = body;
 	}
 
-	public AuthorDTO getAuthorDTO() {
+	public AuthorDTO getAuthor() {
 		return author;
 	}
 	
@@ -94,16 +108,23 @@ public class Post implements Serializable{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
 	}
 
-	
-	
+	@Override
+	public String toString() {
+		return "Post{" +
+				"id='" + id + '\'' +
+				", date=" + date +
+				", title='" + title + '\'' +
+				", author=" + author +
+				'}';
+	}
 }

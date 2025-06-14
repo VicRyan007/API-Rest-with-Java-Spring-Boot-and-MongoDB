@@ -2,6 +2,7 @@ package com.ifpe.project.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.ifpe.project.domain.Post;
 import com.ifpe.project.domain.User;
@@ -66,6 +68,14 @@ public class UserRequestTest {
     }
 
     @Test
+    public void testGetUserByIdNotFound() {
+        String url = "http://localhost:" + port + "/users/nonexistentid";
+        assertThrows(HttpClientErrorException.NotFound.class, () -> {
+            restTemplate.getForEntity(url, User.class);
+        });
+    }
+
+    @Test
     public void testCreateUser() {
         String url = "http://localhost:" + port + "/users";
         UserDTO newUserDto = new UserDTO(new User(null, "John Doe", "john.doe@gmail.com"));
@@ -80,6 +90,24 @@ public class UserRequestTest {
     }
 
     @Test
+    public void testCreateUserWithDuplicateEmail() {
+        String url = "http://localhost:" + port + "/users";
+        UserDTO newUserDto = new UserDTO(new User(null, "John Doe", "maria@gmail.com"));
+        assertThrows(HttpClientErrorException.BadRequest.class, () -> {
+            restTemplate.postForEntity(url, newUserDto, Void.class);
+        });
+    }
+
+    @Test
+    public void testCreateUserWithInvalidData() {
+        String url = "http://localhost:" + port + "/users";
+        UserDTO newUserDto = new UserDTO(new User(null, "", "invalid-email"));
+        assertThrows(HttpClientErrorException.BadRequest.class, () -> {
+            restTemplate.postForEntity(url, newUserDto, Void.class);
+        });
+    }
+
+    @Test
     public void testDeleteUser() {
         List<User> users = userRepository.findAll();
         User user = users.get(0);
@@ -89,6 +117,14 @@ public class UserRequestTest {
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         assertFalse(userRepository.findById(user.getId()).isPresent());
+    }
+
+    @Test
+    public void testDeleteUserNotFound() {
+        String url = "http://localhost:" + port + "/users/nonexistentid";
+        assertThrows(HttpClientErrorException.NotFound.class, () -> {
+            restTemplate.exchange(url, HttpMethod.DELETE, null, Void.class);
+        });
     }
 
     @Test
@@ -109,6 +145,16 @@ public class UserRequestTest {
     }
 
     @Test
+    public void testUpdateUserNotFound() {
+        String url = "http://localhost:" + port + "/users/nonexistentid";
+        UserDTO updatedUserDto = new UserDTO(new User(null, "Maria Silva", "maria.silva@gmail.com"));
+        HttpEntity<UserDTO> requestEntity = new HttpEntity<>(updatedUserDto);
+        assertThrows(HttpClientErrorException.NotFound.class, () -> {
+            restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+        });
+    }
+
+    @Test
     public void testFindUserPosts() {
         List<User> users = userRepository.findAll();
         User user = users.get(0);
@@ -118,5 +164,13 @@ public class UserRequestTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
+    }
+
+    @Test
+    public void testFindUserPostsNotFound() {
+        String url = "http://localhost:" + port + "/users/nonexistentid/posts";
+        assertThrows(HttpClientErrorException.NotFound.class, () -> {
+            restTemplate.getForEntity(url, Post[].class);
+        });
     }
 }
